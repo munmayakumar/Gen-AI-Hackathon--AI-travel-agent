@@ -348,7 +348,9 @@ def booking_page():
                         st.info(f"🌧️ Weather Alternative: {activity.get('weather_alternative')}")
                     
                     if st.button(f"Book This Activity", key=f"activity_{i}"):
+                        user_email = st.session_state.user['email'] if st.session_state.user else 'unknown'
                         result = booking_services.book_activity(
+                            user_email,
                             itinerary.get('id', 'unknown'),
                             activity
                         )

@@ -91,62 +91,62 @@ class BookingServices:
                 "provider": provider
             }
     
-    def book_hotel(self, email: str, itinerary_id: str, hotel_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Book a hotel using available providers"""
+    def book_activity(self, email: str, itinerary_id: str, activity_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Book an activity using available providers"""
         # Simulate API call delay
-        time.sleep(1)
-        
-        provider = random.choice(self.providers["hotels"])
+        time.sleep(0.5)
+
+        provider = random.choice(self.providers["activities"])
         success = random.random() > 0.1  # 90% success rate for demo
-        
-        booking_id = f"HT{random.randint(10000, 99999)}"
-        
+
+        booking_id = f"AC{random.randint(10000, 99999)}"
+
         if success:
             booking_record = {
                 "email": email,
                 "booking_id": booking_id,
-                "booking_type": "hotel",
+                "booking_type": "activity",
                 "provider": provider,
                 "itinerary_id": itinerary_id,
-                "booking_data": json.dumps(hotel_data),
+                "booking_data": json.dumps(activity_data),
                 "status": "confirmed",
                 "created_at": time.time()
             }
-            
+
             table_id = f"{self.project_id}.{self.dataset_id}.bookings"
             job = self.client.load_table_from_json([booking_record], table_id)
-            job.result()  # Wait for the job to complete
-            errors = job.errors if hasattr(job, 'errors') else []
+            job.result()  # Wait for job to complete
+            errors = job.errors if hasattr(job, 'errors') else None
+
             if errors:
                 print(f"Error recording booking: {errors}")
-            
+
             return {
                 "success": True,
                 "booking_id": booking_id,
-                "confirmation": f"Hotel confirmed at {hotel_data.get('name', 'Unknown')} via {provider}",
-                "price": hotel_data.get('total_price', 0),
-                "provider": provider,
+                "confirmation": f"Activity confirmed: {activity_data.get('name', 'Unknown')} via {provider}",
+                "price": activity_data.get('cost', 0),
                 "itinerary_id": itinerary_id
             }
         else:
             return {
                 "success": False,
-                "error": "No available rooms matching your criteria",
+                "error": "No available activities matching your criteria",
                 "provider": provider
             }
-    
-    def book_activity(self, itinerary_id: str, activity_data: Dict[str, Any]) -> Dict[str, Any]:
+    def book_activity(self, email: str, itinerary_id: str, activity_data: Dict[str, Any]) -> Dict[str, Any]:
         """Book an activity using available providers"""
         # Simulate API call delay
         time.sleep(0.5)
         
-        provider = random.choice(self.providers["activities"])
+    provider = random.choice(self.providers["activities"])
         success = random.random() > 0.1  # 90% success rate for demo
         
         booking_id = f"AC{random.randint(10000, 99999)}"
         
         if success:
             booking_record = {
+                "email": email,
                 "booking_id": booking_id,
                 "booking_type": "activity",
                 "provider": provider,
