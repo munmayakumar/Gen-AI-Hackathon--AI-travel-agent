@@ -9,10 +9,11 @@ from datetime import datetime
 class UserManager:
     """Manage user authentication and data storage with BigQuery"""
     
-    def __init__(self, project_id: str = "your-gcp-project-id", dataset_id: str = "travel_planner"):
-        self.project_id = project_id
-        self.dataset_id = dataset_id
-        self.client = bigquery.Client(project=project_id)
+    def __init__(self, project_id: str = None, dataset_id: str = None):
+        import streamlit as st
+        self.project_id = project_id or st.secrets["GCP_PROJECT_ID"]
+        self.dataset_id = dataset_id or st.secrets["BIGQUERY_DATASET"]
+        self.client = bigquery.Client(project=self.project_id)
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
