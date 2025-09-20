@@ -1,4 +1,3 @@
-    print(f"PaymentGateway using project_id: {self.project_id}, dataset_id: {self.dataset_id}")
 # src/payment_gateway.py
 import random
 import time
