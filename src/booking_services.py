@@ -148,7 +148,10 @@ class BookingServices:
             }
             
             table_id = f"{self.project_id}.{self.dataset_id}.bookings"
-            errors = self.client.insert_rows_json(table_id, [booking_record])
+                # Use batch insert instead of streaming insert
+                job = self.client.load_table_from_json([booking_record], table_id)
+                job.result()  # Wait for job to complete
+                errors = job.errors if hasattr(job, 'errors') else None
             
             if errors:
                 print(f"Error recording booking: {errors}")
