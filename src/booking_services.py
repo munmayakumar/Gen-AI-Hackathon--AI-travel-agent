@@ -22,7 +22,7 @@ class BookingServices:
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
-        """Ensure bookings table exists"""
+        """Force bookings table to have correct schema by deleting and recreating it"""
         bookings_table_id = f"{self.project_id}.{self.dataset_id}.bookings"
         bookings_schema = [
             bigquery.SchemaField("booking_id", "STRING", mode="REQUIRED"),
@@ -33,10 +33,16 @@ class BookingServices:
             bigquery.SchemaField("status", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("created_at", "TIMESTAMP", mode="REQUIRED"),
         ]
-        
+        try:
+            # Try to delete the table if it exists
+            self.client.delete_table(bookings_table_id, not_found_ok=True)
+            print(f"Deleted existing table: {bookings_table_id}")
+        except Exception as e:
+            print(f"Error deleting bookings table: {e}")
         try:
             table = bigquery.Table(bookings_table_id, schema=bookings_schema)
-            self.client.create_table(table, exists_ok=True)
+            self.client.create_table(table)
+            print(f"Created bookings table with correct schema: {bookings_table_id}")
         except Exception as e:
             print(f"Error creating bookings table: {e}")
     
