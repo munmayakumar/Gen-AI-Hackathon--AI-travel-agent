@@ -47,7 +47,7 @@ class BookingServices:
         except Exception as e:
             print(f"Error creating bookings table: {e}")
     
-    def book_flight(self, itinerary_id: str, flight_data: Dict[str, Any]) -> Dict[str, Any]:
+    def book_flight(self, email: str, itinerary_id: str, flight_data: Dict[str, Any]) -> Dict[str, Any]:
         """Book a flight using available providers"""
         # Simulate API call delay
         time.sleep(1)
@@ -59,6 +59,7 @@ class BookingServices:
         
         if success:
             booking_record = {
+                "email": email,
                 "booking_id": booking_id,
                 "booking_type": "flight",
                 "provider": provider,

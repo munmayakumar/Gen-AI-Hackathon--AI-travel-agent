@@ -269,7 +269,9 @@ def booking_page():
                 st.write(f"**Dates:** {flight.get('dates', 'Flexible')}")
                 
                 if st.button(f"Book This Flight", key=f"flight_{i}"):
+                    user_email = st.session_state.user['email'] if st.session_state.user else 'unknown'
                     result = booking_services.book_flight(
+                        user_email,
                         itinerary.get('id', 'unknown'),
                         flight
                     )
