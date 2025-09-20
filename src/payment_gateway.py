@@ -58,8 +58,9 @@ class PaymentGateway:
             }
             
             table_id = f"{self.project_id}.{self.dataset_id}.payments"
-            errors = self.client.insert_rows_json(table_id, [payment_record])
-            
+            job = self.client.load_table_from_json([payment_record], table_id)
+            job.result()  # Wait for the job to complete
+            errors = job.errors if hasattr(job, 'errors') else []
             if errors:
                 print(f"Error recording payment: {errors}")
             
