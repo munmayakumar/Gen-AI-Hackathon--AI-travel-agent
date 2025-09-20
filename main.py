@@ -8,7 +8,7 @@ from typing import Dict, Any, List
 from src.user_manager import UserManager
 from src.payment_gateway import PaymentGateway
 from src.booking_services import BookingServices
-from src.itinerary_generator import ItineraryGenerator
+from src.itinenary_generator import ItineraryGenerator
 
 # Page configuration
 st.set_page_config(

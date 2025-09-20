@@ -1,5 +1,6 @@
 # src/itinerary_generator.py
 import re
+import random
 import asyncio
 import json
 import requests
@@ -9,7 +10,28 @@ from icalendar import Calendar, Event
 from agno.agent import Agent
 from agno.tools.mcp import MultiMCPTools
 from agno.tools.googlesearch import GoogleSearchTools
-from agno.models.gemini import GeminiChat
+class GeminiChat:
+    """Custom GeminiChat class for Google Gemini API integration."""
+    def __init__(self, id: str, api_key: str):
+        self.id = id
+        self.api_key = api_key
+
+    async def arun(self, prompt: str):
+        # This is a placeholder for async Gemini API call
+        # Replace with actual Gemini API integration as needed
+        import aiohttp
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.id}:generateContent?key={self.api_key}"
+        headers = {"Content-Type": "application/json"}
+        payload = {"contents": [{"parts": [{"text": prompt}]}]}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=payload) as resp:
+                result = await resp.json()
+                # Extract the generated content from Gemini response
+                content = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                class Response:
+                    def __init__(self, content):
+                        self.content = content
+                return Response(content)
 from typing import List, Dict, Any
 
 class ItineraryGenerator:
