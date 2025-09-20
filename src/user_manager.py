@@ -156,7 +156,10 @@ class UserManager:
             "email": email,
             "booking_id": booking_data.get("booking_id", f"BK{datetime.utcnow().timestamp()}"),
             "booking_type": booking_data.get("type", "unknown"),
+            "provider": booking_data.get("provider", "user"),
+            "itinerary_id": booking_data.get("itinerary_id", "unknown"),
             "booking_data": json.dumps(booking_data),
+            "status": booking_data.get("status", "confirmed"),
             "created_at": datetime.utcnow().isoformat()
         }
         
