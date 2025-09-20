@@ -7,7 +7,7 @@ from google.cloud import bigquery
 class PaymentGateway:
     """Mock payment gateway that can be replaced with real providers"""
     
-    def __init__(self, project_id: str = "your-gcp-project-id", dataset_id: str = "travel_planner"):
+    def __init__(self, project_id: str = "tonal-apex-471812-j2", dataset_id: str = "travel_planner"):
         import streamlit as st
         self.project_id = project_id or st.secrets.get("GCP_PROJECT_ID", "tonal-apex-471812-j2")
         self.dataset_id = dataset_id or st.secrets.get("BIGQUERY_DATASET", "travel_planner")
