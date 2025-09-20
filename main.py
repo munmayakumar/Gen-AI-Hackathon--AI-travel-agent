@@ -302,7 +302,9 @@ def booking_page():
                 st.write(f"**Location:** {hotel.get('location', 'Unknown')}")
                 
                 if st.button(f"Book This Hotel", key=f"hotel_{i}"):
+                    user_email = st.session_state.user['email'] if st.session_state.user else 'unknown'
                     result = booking_services.book_hotel(
+                        user_email,
                         itinerary.get('id', 'unknown'),
                         hotel
                     )

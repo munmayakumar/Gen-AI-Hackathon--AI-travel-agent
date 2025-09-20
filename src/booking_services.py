@@ -91,7 +91,7 @@ class BookingServices:
                 "provider": provider
             }
     
-    def book_hotel(self, itinerary_id: str, hotel_data: Dict[str, Any]) -> Dict[str, Any]:
+    def book_hotel(self, email: str, itinerary_id: str, hotel_data: Dict[str, Any]) -> Dict[str, Any]:
         """Book a hotel using available providers"""
         # Simulate API call delay
         time.sleep(1)
@@ -103,6 +103,7 @@ class BookingServices:
         
         if success:
             booking_record = {
+                "email": email,
                 "booking_id": booking_id,
                 "booking_type": "hotel",
                 "provider": provider,
