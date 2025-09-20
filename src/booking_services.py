@@ -12,14 +12,13 @@ class BookingServices:
         import streamlit as st
         self.project_id = project_id or st.secrets.get("GCP_PROJECT_ID", "tonal-apex-471812-j2")
         self.dataset_id = dataset_id or st.secrets.get("BIGQUERY_DATASET", "travel_planner")
+        print(f"BookingServices using project_id: {self.project_id}, dataset_id: {self.dataset_id}")
         self.client = bigquery.Client(project=self.project_id)
         self.providers = {
             "flights": ["skyscanner", "google_flights", "expedia"],
             "hotels": ["booking", "expedia", "airbnb"],
             "activities": ["viator", "getyourguide", "airbnb_experiences"]
         }
-        self._ensure_tables_exist()
-        
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
