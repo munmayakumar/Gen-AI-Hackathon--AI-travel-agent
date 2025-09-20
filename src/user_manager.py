@@ -82,12 +82,13 @@ class UserManager:
         }
         
         table_id = f"{self.project_id}.{self.dataset_id}.users"
-        errors = self.client.insert_rows_json(table_id, [user_data])
-        
+        from google.cloud import bigquery
+        job = self.client.load_table_from_json([user_data], table_id)
+        job.result()  # Wait for the job to complete
+        errors = job.errors if hasattr(job, 'errors') else []
         if errors:
             print(f"Error inserting user: {errors}")
             return None
-        
         # Return user data without password hash
         return {
             "email": email,
