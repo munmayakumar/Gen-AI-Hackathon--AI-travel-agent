@@ -6,6 +6,49 @@ from typing import Dict, Any
 from google.cloud import bigquery
 
 class BookingServices:
+    def book_hotel(self, email: str, itinerary_id: str, hotel_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Book a hotel using available providers"""
+        # Simulate API call delay
+        time.sleep(1)
+
+        provider = random.choice(self.providers["hotels"])
+        success = random.random() > 0.1  # 90% success rate for demo
+
+        booking_id = f"HT{random.randint(10000, 99999)}"
+
+        if success:
+            booking_record = {
+                "email": email,
+                "booking_id": booking_id,
+                "booking_type": "hotel",
+                "provider": provider,
+                "itinerary_id": itinerary_id,
+                "booking_data": json.dumps(hotel_data),
+                "status": "confirmed",
+                "created_at": time.time()
+            }
+
+            table_id = f"{self.project_id}.{self.dataset_id}.bookings"
+            job = self.client.load_table_from_json([booking_record], table_id)
+            job.result()  # Wait for job to complete
+            errors = job.errors if hasattr(job, 'errors') else []
+            if errors:
+                print(f"Error recording booking: {errors}")
+
+            return {
+                "success": True,
+                "booking_id": booking_id,
+                "confirmation": f"Hotel confirmed at {hotel_data.get('name', 'Unknown')} via {provider}",
+                "price": hotel_data.get('total_price', 0),
+                "provider": provider,
+                "itinerary_id": itinerary_id
+            }
+        else:
+            return {
+                "success": False,
+                "error": "No available hotels matching your criteria",
+                "provider": provider
+            }
     """Service for handling bookings with various providers"""
     
     def __init__(self, project_id: str = "tonal-apex-471812-j2", dataset_id: str = "travel_planner"):
