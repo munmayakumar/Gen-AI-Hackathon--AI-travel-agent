@@ -25,6 +25,7 @@ class BookingServices:
         """Force bookings table to have correct schema by deleting and recreating it"""
         bookings_table_id = f"{self.project_id}.{self.dataset_id}.bookings"
         bookings_schema = [
+            bigquery.SchemaField("email", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("booking_id", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("booking_type", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("provider", "STRING", mode="REQUIRED"),
