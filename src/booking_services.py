@@ -139,9 +139,8 @@ class BookingServices:
         # Simulate API call delay
         time.sleep(0.5)
         
-    provider = random.choice(self.providers["activities"])
+        provider = random.choice(self.providers["activities"])
         success = random.random() > 0.1  # 90% success rate for demo
-        
         booking_id = f"AC{random.randint(10000, 99999)}"
         
         if success:
