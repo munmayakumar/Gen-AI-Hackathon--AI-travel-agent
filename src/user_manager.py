@@ -82,7 +82,6 @@ class UserManager:
         }
         
         table_id = f"{self.project_id}.{self.dataset_id}.users"
-        from google.cloud import bigquery
         job = self.client.load_table_from_json([user_data], table_id)
         job.result()  # Wait for the job to complete
         errors = job.errors if hasattr(job, 'errors') else []

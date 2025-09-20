@@ -1,3 +1,4 @@
+import json
 # src/booking_services.py
 import random
 import time
@@ -8,15 +9,16 @@ class BookingServices:
     """Service for handling bookings with various providers"""
     
     def __init__(self, project_id: str = "your-gcp-project-id", dataset_id: str = "travel_planner"):
-        self.project_id = project_id
-        self.dataset_id = dataset_id
-        self.client = bigquery.Client(project=project_id)
-        
+        import streamlit as st
+        self.project_id = project_id or st.secrets.get("GCP_PROJECT_ID", "tonal-apex-471812-j2")
+        self.dataset_id = dataset_id or st.secrets.get("BIGQUERY_DATASET", "travel_planner")
+        self.client = bigquery.Client(project=self.project_id)
         self.providers = {
             "flights": ["skyscanner", "google_flights", "expedia"],
             "hotels": ["booking", "expedia", "airbnb"],
             "activities": ["viator", "getyourguide", "airbnb_experiences"]
         }
+        self._ensure_tables_exist()
         
         self._ensure_tables_exist()
     
