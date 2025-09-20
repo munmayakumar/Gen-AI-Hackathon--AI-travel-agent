@@ -1,3 +1,4 @@
+    print(f"PaymentGateway using project_id: {self.project_id}, dataset_id: {self.dataset_id}")
 # src/payment_gateway.py
 import random
 import time
@@ -11,6 +12,7 @@ class PaymentGateway:
         import streamlit as st
         self.project_id = project_id or st.secrets.get("GCP_PROJECT_ID", "tonal-apex-471812-j2")
         self.dataset_id = dataset_id or st.secrets.get("BIGQUERY_DATASET", "travel_planner")
+        print(f"PaymentGateway using project_id: {self.project_id}, dataset_id: {self.dataset_id}")
         self.client = bigquery.Client(project=self.project_id)
         self.supported_providers = ["stripe", "paypal", "square", "braintree"]
         self._ensure_tables_exist()
