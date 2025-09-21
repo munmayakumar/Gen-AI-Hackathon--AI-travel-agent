@@ -219,7 +219,8 @@ def booking_page():
     
     # Progress bar
     steps = ["Itinerary Selection", "Flight Booking", "Accommodation Booking", "Activities Booking", "Payment"]
-    progress = st.progress(st.session_state.current_step / (len(steps) - 1))
+    progress_value = min(max(st.session_state.current_step / (len(steps) - 1), 0.0), 1.0)
+    progress = st.progress(progress_value)
     st.caption(f"Step {st.session_state.current_step + 1} of {len(steps)}: {steps[st.session_state.current_step]}")
     
     # Step 0: Itinerary confirmation
