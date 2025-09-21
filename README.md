@@ -20,20 +20,65 @@ A comprehensive travel planning application that uses AI to generate personalize
    pip install -r requirements.txt
 
 2. Install MCP Servers:
-
-   python setup_mcp_servers.py
-
-<img width="783" height="646" alt="image" src="https://github.com/user-attachments/assets/3e89ea6e-e1c5-4f0c-a286-51300e8b89a5" />
+   ```
+    python setup_mcp_servers.py
 
 
+3. Set Environment Variables:
+   
+   Copy .env.example to .env and fill in your API keys:
+
+      - GEMINI_API_KEY - Get from Google AI Studio
+
+      - GOOGLE_MAPS_API_KEY - Get from Google Cloud Console
+
+      - GCP_PROJECT_ID - Your Google Cloud Project ID
+
+      - BIGQUERY_DATASET - Your BigQuery dataset name
+
+4. Run the Application:
+   
+   ```bash
+   ./run.sh
+
+5.GCP/BigQuery Setup
+
+   1. Create BigQuery Dataset:
+      
+    CREATE SCHEMA IF NOT EXISTS travel_planner;
+    
+   2. Automatic Table Creation
+      
+     --  Tables will be automatically created when the application first runs.
+
+6. File structure
+
+ ## Project Structure
+
+```
+AI travel-planner/
+├── main.py                 # Main Streamlit application
+├── requirements.txt        # Python dependencies
+├── run.sh                 # Startup script
+├── setup_mcp_servers.py   # MCP server installation
+├── .env.example           # Environment variables template
+├── README.md              # Project documentation
+├── src/                   # Source modules directory
+├── user_manager.py        # User authentication and management
+├── payment_gateway.py     # Payment processing
+├── booking_services.py    # Booking management
+└── itinerary_generator.py # AI itinerary generation
+```
 
 
- # File structure
 
- <img width="847" height="326" alt="image" src="https://github.com/user-attachments/assets/6f153ac3-3aa2-4d36-b319-d6fe250a6002" />
+**API Keys Required**:
 
+   - Google Gemini API
 
-<img width="764" height="172" alt="image" src="https://github.com/user-attachments/assets/abc6e428-2bd1-4602-b1fd-a93ea832f681" />
+   - Google Maps API
+
+   - Google Cloud Platform (for BigQuery)
 
 
  
