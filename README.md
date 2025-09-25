@@ -17,7 +17,7 @@ A comprehensive travel planning application that uses AI to generate personalize
 
 1. **Install Dependencies**:
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirement.txt
 
 2. Install MCP Servers:
    ```
